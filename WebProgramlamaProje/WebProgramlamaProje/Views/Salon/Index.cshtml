@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebProgramlamaProje.Models.Salon>
+
+<h2>Salon Listesi</h2>
+
+<a href="/Salon/Create" class="btn btn-primary mb-3">Yeni Salon Ekle</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Salon Adı</th>
+            <th>Adres</th>
+            <th>Telefon</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var salon in Model)
+        {
+            <tr>
+                <td>@salon.Name</td>
+                <td>@salon.Address</td>
+                <td>@salon.Phone</td>
+                <td>
+                    <a href="/Salon/Details/@salon.Id" class="btn btn-info btn-sm">Detaylar</a>
+                    <a href="/Salon/Edit/@salon.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                    <!-- Silme işlemi için modal tetikleyici -->
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            data-salon-id="@salon.Id" data-salon-name="@salon.Name">
+                        Sil
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Silme Onay Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteModalBody">Bu salonu silmek istediğinize emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete" asp-controller="Salon" method="post">
+                    <input type="hidden" id="deleteSalonId" name="id" value="" />
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Modal tetikleyici verilerini doldur
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Modal'i açan buton
+            const salonId = button.getAttribute('data-salon-id');
+            const salonName = button.getAttribute('data-salon-name');
+
+            // Modal içeriğini güncelle
+            const modalBody = deleteModal.querySelector('#deleteModalBody');
+            const inputSalonId = deleteModal.querySelector('#deleteSalonId');
+
+            modalBody.textContent = `"${salonName}" adlı salonu silmek üzeresiniz. Bu işlem geri alınamaz!`;
+            inputSalonId.value = salonId;
+        });
+    </script>
+}

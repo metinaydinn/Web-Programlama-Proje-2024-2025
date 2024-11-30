@@ -1,0 +1,140 @@
+﻿@model WebProgramlamaProje.Models.Salon
+
+<h2>Salon Düzenle</h2>
+
+<!-- Validation summary: Tüm hata mesajlarını burada göster -->
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-action="Edit" method="post">
+    <!-- Salon ID -->
+    <div class="form-group">
+        <label for="Id">Salon ID:</label>
+        <input asp-for="Id" class="form-control" readonly />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <!-- Salon Adı -->
+    <div class="form-group">
+        <label for="Name">Salon Adı:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <!-- Adres -->
+    <div class="form-group">
+        <label for="Address">Adres:</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <!-- Telefon -->
+    <div class="form-group">
+        <label for="Phone">Telefon Numarası:</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <!-- Hizmetler -->
+
+    <h4>Hizmetler</h4>
+    <div id="services">
+        @if (Model.Services != null && Model.Services.Any())
+        {
+            @for (var i = 0; i < Model.Services.Count; i++)
+            {
+                <div class="form-group">
+                    <input type="hidden" name="Services[@i].Id" value="@Model.Services[i].Id" />
+
+                    <label for="ServiceName">Hizmet Adı:</label>
+                    <input name="Services[@i].Name" class="form-control" value="@Model.Services[i].Name" readonly />
+
+
+                    <label for="ServicePrice">Fiyat:</label>
+                    <input name="Services[@i].Price" class="form-control" type="number" step="0.01" value="@Model.Services[i].Price" />
+
+                    <label for="ServiceDuration">Süre (dk):</label>
+                    <input name="Services[@i].Duration" class="form-control" type="number" value="@Model.Services[i].Duration" />
+                </div>
+            }
+        }
+        }
+    </div>
+    <button type="button" id="addService" class="btn btn-success mb-3">+ Yeni Hizmet Ekle</button>
+
+    <!-- Çalışanlar -->
+    <h4>Çalışanlar</h4>
+    <div id="employees">
+        @if (Model.Employees != null && Model.Employees.Any())
+        {
+            @for (var i = 0; i < Model.Employees.Count; i++)
+            {
+                <div class="form-group">
+                    <label for="EmployeeName">Çalışan Adı:</label>
+                    <input name="Employees[@i].Name" class="form-control" value="@Model.Employees[i].Name" />
+
+                    <label for="EmployeeSpecialty">Uzmanlık:</label>
+                    <input name="Employees[@i].Specialty" class="form-control" value="@Model.Employees[i].Specialty" />
+
+                    <label for="EmployeeSkills">Yapabildiği İşlemler:</label>
+                    <input name="Employees[@i].Skills" class="form-control" value="@Model.Employees[i].Skills" />
+                </div>
+            }
+        }
+        }
+    </div>
+    <button type="button" id="addEmployee" class="btn btn-success mb-3">+ Yeni Çalışan Ekle</button>
+
+    <!-- Kaydet ve İptal Butonları -->
+    <button type="submit" class="btn btn-primary mt-3">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">İptal</a>
+</form>
+
+@section Scripts {
+    <script>
+        let serviceIndex = @Model.Services.Count;
+        let employeeIndex = @Model.Employees.Count;
+
+        // Yeni Hizmet Ekleme
+        document.getElementById("addService").addEventListener("click", function () {
+            const servicesDiv = document.getElementById("services");
+
+            // Yeni hizmet için HTML
+            const newService = `
+                        <div class="form-group">
+                                    <input type="hidden" name="Services[${serviceIndex}].Id" value="0" />
+                            <label for="Services[${serviceIndex}].Name">Hizmet Adı:</label>
+                            <input name="Services[${serviceIndex}].Name" class="form-control" placeholder="Hizmet Adı" />
+
+                            <label for="Services[${serviceIndex}].Price">Fiyat:</label>
+                            <input name="Services[${serviceIndex}].Price" class="form-control" type="number" step="0.01" placeholder="Fiyat" />
+
+                            <label for="Services[${serviceIndex}].Duration">Süre (dk):</label>
+                            <input name="Services[${serviceIndex}].Duration" class="form-control" type="number" placeholder="Süre" />
+                        </div>
+                    `;
+
+            // Yeni hizmeti ekle
+            servicesDiv.insertAdjacentHTML("beforeend", newService);
+            serviceIndex++;
+        });
+
+
+        // Yeni Çalışan Ekleme
+        document.getElementById("addEmployee").addEventListener("click", function () {
+            const employeesDiv = document.getElementById("employees");
+            const newEmployee = `
+                                        <div class="form-group">
+                                            <label for="EmployeeName">Çalışan Adı:</label>
+                                            <input name="Employees[${employeeIndex}].Name" class="form-control" placeholder="Çalışan Adı" />
+
+                                            <label for="EmployeeSpecialty">Uzmanlık:</label>
+                                            <input name="Employees[${employeeIndex}].Specialty" class="form-control" placeholder="Uzmanlık" />
+
+                                             <label for="EmployeeSkills">Yapabildiği İşlemler:</label>
+                                                    <input name="Employees[${employeeIndex}].Specialty" class="form-control" placeholder="Yapabildiği İşlemler" />
+                                        </div>`;
+            employeesDiv.insertAdjacentHTML("beforeend", newEmployee);
+            employeeIndex++;
+        });
+    </script>
+}

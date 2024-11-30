@@ -1,0 +1,240 @@
+﻿@model WebProgramlamaProje.Models.Salon
+
+<h2>Yeni Salon Ekle</h2>
+
+<!-- Validation summary: Tüm hata mesajlarını burada göster -->
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-controller="Salon" asp-action="Create" method="post">
+    <!-- Salon ID -->
+    <div class="form-group">
+        <label for="Id">Salon ID:</label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <!-- Salon Adı -->
+    <div class="form-group">
+        <label for="Name">Salon Adı:</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <!-- Adres -->
+    <div class="form-group">
+        <label for="Address">Adres:</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <!-- Telefon -->
+    <div class="form-group">
+        <label for="Phone">Telefon Numarası:</label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <!-- Hizmetlerin Girildiği Alan -->
+    <div class="form-group mt-4">
+        <label for="serviceCount">Kaç Hizmet eklemek istiyorsunuz?</label>
+        <input id="serviceCount" type="number" class="form-control" min="1" value="1" />
+        <button type="button" onclick="generateServiceFields()" class="btn btn-secondary mt-2">Hizmet Alanlarını Oluştur</button>
+    </div>
+    <div id="services"></div>
+    <!-- Çalışma Günleri ve Saatleri -->
+    <h4>Çalışma Günleri ve Saatleri</h4>
+    <div id="workingHours">
+        @for (int i = 0; i < 7; i++)
+        {
+            var day = new[] { "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar" }[i];
+            <div class="form-group mt-3">
+                <h5>@day</h5>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="@day" value="@day" onchange="toggleWorkingHourInputs('@day', this.checked)" />
+                    <label class="form-check-label" for="@day">Çalışma günü olarak seç</label>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="start-@day">Başlangıç Saati:</label>
+                        <input type="time" id="start-@day" name="WorkingHours[@i].StartTime" class="form-control" disabled />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="end-@day">Bitiş Saati:</label>
+                        <input type="time" id="end-@day" name="WorkingHours[@i].EndTime" class="form-control" disabled />
+                    </div>
+                </div>
+                <!-- Gün adı gönderiliyor -->
+                <input type="hidden" name="WorkingHours[@i].DayOfWeek" value="@day" />
+            </div>
+        }
+    </div>
+
+
+
+    <!-- Çalışanların Dinamik Olarak Eklendiği Alan -->
+    <div class="form-group mt-4">
+        <label for="employeeCount">Kaç Çalışan Eklemek İstiyorsunuz?</label>
+        <input id="employeeCount" type="number" class="form-control" min="1" value="1" />
+        <button type="button" onclick="generateEmployeeFields()" class="btn btn-secondary mt-2">Çalışan Alanlarını Oluştur</button>
+    </div>
+    <div id="employees"></div>
+
+
+    <!-- Kaydet Butonu -->
+    <button type="submit" class="btn btn-primary mt-4">Kaydet</button>
+</form>
+<script>
+    function toggleWorkingHourInputs(day, isChecked) {
+        const startInput = document.getElementById(`start-${day}`);
+        const endInput = document.getElementById(`end-${day}`);
+
+        // Inputları etkinleştir veya devre dışı bırak
+        startInput.disabled = !isChecked;
+        endInput.disabled = !isChecked;
+
+        if (!isChecked) {
+            startInput.value = ""; // Boş bırak
+            endInput.value = ""; // Boş bırak
+        }
+    }
+</script>
+
+<script>
+    // Global hizmetler listesi (adı, fiyatı, süresi ile birlikte)
+    let services = [];
+
+    // Hizmet Alanlarını Oluşturma
+    function generateServiceFields() {
+        const serviceCount = parseInt(document.getElementById("serviceCount").value);
+        const servicesDiv = document.getElementById("services");
+
+        // Mevcut hizmetleri temizle
+        servicesDiv.innerHTML = "";
+        services = []; // Hizmet listesi sıfırlanıyor
+
+        for (let i = 0; i < serviceCount; i++) {
+            const serviceField = `
+                    <div class="form-group mt-4">
+                        <label>Hizmet ${i + 1} Adı:</label>
+                            <input type="text" name="Services[${i}].Name" class="form-control service-name" placeholder="Hizmet Adı" onchange="updateServices(${i})" />
+
+                        <label>Hizmet ${i + 1} Fiyatı:</label>
+                            <input type="number" name="Services[${i}].Price" class="form-control service-price" placeholder="Fiyat (TL)" step="0.01" onchange="updateServices(${i})" />
+
+                        <label>Hizmet ${i + 1} Süresi (dk):</label>
+                            <input type="number" name="Services[${i}].Duration" class="form-control service-duration" placeholder="Süre (dakika)" onchange="updateServices(${i})" />
+                    </div>`;
+            servicesDiv.insertAdjacentHTML("beforeend", serviceField);
+        }
+    }
+
+    // Hizmetleri Global Listeye Kaydet
+    function updateServices(index) {
+        const serviceInputs = document.querySelectorAll('.service-name');
+        const priceInputs = document.querySelectorAll('.service-price');
+        const durationInputs = document.querySelectorAll('.service-duration');
+
+        // Her hizmet için bilgileri kaydet
+        services = Array.from(serviceInputs).map((input, i) => ({
+            name: input.value.trim(),
+            price: parseFloat(priceInputs[i].value) || 0,
+            duration: parseInt(durationInputs[i].value) || 0
+        }));
+    }
+
+    // Çalışan Alanlarını Oluşturma
+    function generateEmployeeFields() {
+        const employeeCount = parseInt(document.getElementById("employeeCount").value);
+        const employeesDiv = document.getElementById("employees");
+
+        // Mevcut alanları temizle
+        employeesDiv.innerHTML = "";
+
+        for (let i = 0; i < employeeCount; i++) {
+            const employeeField = `
+                    <div class="form-group mt-4">
+                        <h5>Çalışan ${i + 1}</h5>
+                        <label>Adı:</label>
+                        <input name="Employees[${i}].Name" class="form-control" placeholder="Çalışan Adı" />
+
+                        <label>Uzmanlık:</label>
+                        <div id="specialties-container-${i}">
+                            ${generateSpecialtyDropdown(i, 0)}
+                        </div>
+                        <button type="button" class="btn btn-secondary mt-2" onclick="addSpecialtyField(${i})">Uzmanlık Ekle</button>
+
+                        <label>Yapabildiği İşler:</label>
+                        <div id="skills-container-${i}">
+                            ${generateSkillDropdown(i, 0)}
+                        </div>
+                        <button type="button" class="btn btn-secondary mt-2" onclick="addSkillField(${i})">Yapabileceği İş Ekle</button>
+                    </div>`;
+            employeesDiv.insertAdjacentHTML("beforeend", employeeField);
+        }
+    }
+
+    // Uzmanlık Alanları İçin Dropdown Oluşturma
+    function generateSpecialtyDropdown(employeeIndex, specialtyIndex) {
+        return `
+                <select name="Employees[${employeeIndex}].Specialty[${specialtyIndex}]" class="form-control mb-2" required>
+                <option value="" disabled selected>Bir uzmanlık seçin</option>
+                ${services.map(service => `
+                    <option value="${service.name}">
+                        ${service.name} - ${service.price} TL / ${service.duration} dk
+                    </option>`).join('')}
+            </select>`;
+    }
+
+
+    // Yapabildiği İşler İçin Dropdown Oluşturma
+    function generateSkillDropdown(employeeIndex, skillIndex) {
+        return `
+                <select name="Employees[${employeeIndex}].Skills[${skillIndex}]" class="form-control mb-2">
+                    <option value="" disabled selected>Bir iş seçin</option>
+                    ${services.map(service => `
+                        <option value="${service.name}">
+                            ${service.name} - ${service.price} TL / ${service.duration} dk
+                        </option>`).join('')}
+                </select>`;
+    }
+
+    // Dinamik Uzmanlık Alanı Ekleme
+    function addSpecialtyField(employeeIndex) {
+        const container = document.getElementById(`specialties-container-${employeeIndex}`);
+        const specialtyIndex = container.children.length; // Mevcut uzmanlık sayısı
+        container.insertAdjacentHTML("beforeend", generateSpecialtyDropdown(employeeIndex, specialtyIndex));
+    }
+
+    // Dinamik Yapabildiği İş Alanı Ekleme
+    function addSkillField(employeeIndex) {
+        const container = document.getElementById(`skills-container-${employeeIndex}`);
+        const skillIndex = container.children.length; // Mevcut iş sayısı
+        container.insertAdjacentHTML("beforeend", generateSkillDropdown(employeeIndex, skillIndex));
+    }
+</script>
+<script>
+    // Checkbox değiştiğinde saat alanlarını etkinleştir veya devre dışı bırak
+    document.querySelectorAll('#workingHours input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const startInput = document.getElementById(`start-${this.id}`);
+            const endInput = document.getElementById(`end-${this.id}`);
+            if (this.checked) {
+                startInput.disabled = false;
+                endInput.disabled = false;
+            } else {
+                startInput.disabled = true;
+                endInput.disabled = true;
+                startInput.value = '';
+                endInput.value = '';
+            }
+        });
+    });
+</script>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,67 @@
+﻿@model WebProgramlamaProje.Models.Salon
+
+<h2>Salon Detayları</h2>
+
+<div>
+    <h3>@Model.Name</h3>
+    <p><strong>Adres:</strong> @Model.Address</p>
+    <p><strong>Telefon:</strong> @Model.Phone</p>
+
+    <h4>Hizmetler</h4>
+    @if (Model.Services != null && Model.Services.Any())
+    {
+        <ul>
+            @foreach (var service in Model.Services)
+            {
+                <li>
+                    <strong>@service.Name:</strong> @service.Price TL, Süre: @service.Duration dakika
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Bu salon için henüz hizmet eklenmemiş.</p>
+    }
+    <h4 class="mt-4">Çalışma Günleri ve Saatleri</h4>
+    @if (Model.WorkingHours != null && Model.WorkingHours.Count > 0)
+    {
+        <ul class="list-group">
+            @foreach (var workingHour in Model.WorkingHours)
+            {
+                <li class="list-group-item">
+                    <strong>Gün:</strong> @workingHour.DayOfWeek <br />
+                    <strong>Başlangıç Saati:</strong> @workingHour.StartTime <br />
+                    <strong>Bitiş Saati:</strong> @workingHour.EndTime
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Bu salon için çalışma günleri ve saatleri belirtilmemiş.</p>
+    }
+
+
+    <h4>Çalışanlar</h4>
+    @if (Model.Employees != null && Model.Employees.Any())
+    {
+        <ul>
+            @foreach (var employee in Model.Employees)
+            {
+                <li>
+                    <strong>@employee.Name:</strong>
+                    Uzmanlık: @(employee.Specialty != null && employee.Specialty.Any() ? string.Join(", ", employee.Specialty) : "Belirtilmemiş"),
+                    Yapabildiği İşlemler: @(employee.Skills != null && employee.Skills.Any() ? string.Join(", ", employee.Skills) : "Belirtilmemiş")
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Bu salon için henüz çalışan eklenmemiş.</p>
+    }
+
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Geri Dön</a>
