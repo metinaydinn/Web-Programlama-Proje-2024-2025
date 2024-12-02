@@ -132,6 +132,7 @@ namespace WebProgramlamaProje.Controllers
             // Salon ve ilişkili hizmetleri yükle
             var salon = _context.Salons
                                 .Include(s => s.Services)
+                                .Include(s => s.Employees) // Çalışanları yükle
                                 .FirstOrDefault(s => s.Id == id);
 
             if (salon == null)
@@ -158,6 +159,7 @@ namespace WebProgramlamaProje.Controllers
                 // Veritabanından mevcut salon ve ilişkili hizmetleri yükle
                 var existingSalon = _context.Salons
                                             .Include(s => s.Services)
+                                            .Include(s => s.Employees) // Çalışanları yükle
                                             .FirstOrDefault(s => s.Id == salon.Id);
 
                 if (existingSalon == null)
@@ -209,6 +211,46 @@ namespace WebProgramlamaProje.Controllers
                     _context.Services.Remove(serviceToRemove);
                 }
 
+                // Mevcut çalışanları güncelle veya yeni çalışanları ekle
+                foreach (var employee in salon.Employees)
+                {
+                    if (employee.Id == 0)
+                    {
+                        // Yeni çalışan ekle
+                        existingSalon.Employees.Add(new Employee
+                        {
+                            Name = employee.Name,
+                            Specialty = employee.Specialty,
+                            Skills = employee.Skills,
+                            SalonId = salon.Id
+                        });
+                    }
+                    else
+                    {
+                        // Mevcut çalışanı bul ve güncelle
+                        var existingEmployee = existingSalon.Employees.FirstOrDefault(e => e.Id == employee.Id);
+
+                        if (existingEmployee != null)
+                        {
+                            existingEmployee.Name = employee.Name;
+                            existingEmployee.Specialty = employee.Specialty;
+                            existingEmployee.Skills = employee.Skills;
+                        }
+                    }
+                }
+
+                // Mevcut olmayan çalışanları sil
+                var incomingEmployeeIds = salon.Employees.Select(e => e.Id).ToList();
+                var employeesToRemove = existingSalon.Employees
+                                                      .Where(e => !incomingEmployeeIds.Contains(e.Id))
+                                                      .ToList();
+
+                foreach (var employeeToRemove in employeesToRemove)
+                {
+                    _context.Employees.Remove(employeeToRemove);
+                }
+
+
                 // Değişiklikleri kaydet
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -220,7 +262,44 @@ namespace WebProgramlamaProje.Controllers
 
 
 
-        
+        [HttpPost]
+        public IActionResult DeleteService([FromBody] int serviceId)
+        {
+            // Veritabanından hizmeti bul
+            var service = _context.Services.FirstOrDefault(s => s.Id == serviceId);
+
+            if (service != null)
+            {
+                // Hizmeti sil
+                _context.Services.Remove(service);
+                _context.SaveChanges();
+
+                // Silme başarılı
+                return Json(new { success = true, message = "Hizmet başarıyla silindi." });
+            }
+
+            // Hizmet bulunamadı
+            return Json(new { success = false, message = "Hizmet bulunamadı." });
+        }
+
+
+        [HttpPost]
+        public IActionResult DeleteEmployee([FromBody] int employeeId)
+        {
+            var employee = _context.Employees.FirstOrDefault(e => e.Id == employeeId);
+
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+                _context.SaveChanges();
+
+                return Json(new { success = true, message = "Çalışan başarıyla silindi." });
+            }
+
+            return Json(new { success = false, message = "Çalışan bulunamadı." });
+        }
+
+
 
 
 
