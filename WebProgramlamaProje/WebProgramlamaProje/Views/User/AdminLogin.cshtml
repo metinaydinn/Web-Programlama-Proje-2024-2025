@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Admin Girişi";
+}
+
+<h2>Admin Girişi</h2>
+
+@if (TempData["Error"] != null)
+{
+    <p style="color: red;">@TempData["Error"]</p>
+}
+
+<form method="post" action="/User/AdminLogin">
+    <div>
+        <label for="email">Kullanıcı Adı:</label>
+        <input type="email" name="email" id="email" placeholder="Kullanıcı Adı" required />
+    </div>
+    <div>
+        <label for="password">Şifre:</label>
+        <input type="password" name="password" id="password" placeholder="Şifre" required />
+    </div>
+    <button type="submit">Giriş Yap</button>
+</form>

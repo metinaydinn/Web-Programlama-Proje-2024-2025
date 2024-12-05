@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Üye Girişi";
+}
+
+<h2>Üye Girişi</h2>
+
+@if (TempData["Error"] != null)
+{
+    <p style="color: red;">@TempData["Error"]</p>
+}
+
+<form method="post" action="/User/UserLogin">
+    <div>
+        <label for="email">E-posta:</label>
+        <input type="email" name="email" id="email" placeholder="E-posta" required />
+    </div>
+    <div>
+        <label for="password">Şifre:</label>
+        <input type="password" name="password" id="password" placeholder="Şifre" required />
+    </div>
+    <button type="submit">Giriş Yap</button>
+</form>

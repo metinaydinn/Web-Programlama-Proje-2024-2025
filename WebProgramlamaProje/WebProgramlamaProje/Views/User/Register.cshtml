@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<h2>Kayıt Ol</h2>
+
+@if (TempData["Error"] != null)
+{
+    <p style="color: red;">@TempData["Error"]</p>
+}
+
+<form method="post" action="/User/Register">
+    <div>
+        <label for="name">Ad Soyad:</label>
+        <input type="text" name="name" id="name" placeholder="Ad Soyad" required />
+    </div>
+    <div>
+        <label for="email">E-posta:</label>
+        <input type="email" name="email" id="email" placeholder="E-posta" required />
+    </div>
+    <div>
+        <label for="password">Şifre:</label>
+        <input type="password" name="password" id="password" placeholder="Şifre" required />
+    </div>
+    <div>
+        <label for="phone">Telefon:</label>
+        <input type="text" name="phone" id="phone" placeholder="Telefon" required />
+    </div>
+    <button type="submit">Kayıt Ol</button>
+</form>

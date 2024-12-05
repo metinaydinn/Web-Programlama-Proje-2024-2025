@@ -7,7 +7,11 @@ namespace WebProgramlamaProje.Controllers
     public class SalonController : Controller
     {
         private readonly SalonDbContext _context;
-
+        // Admin yetkilendirme kontrolü
+        private bool IsAdmin()
+        {
+            return HttpContext.Session.GetString("UserRole") == "Admin";
+        }
         public SalonController(SalonDbContext context)
         {
             _context = context;
@@ -16,6 +20,11 @@ namespace WebProgramlamaProje.Controllers
         // Salonları listeleme
         public IActionResult Index()
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             var salons = _context.Salons.ToList();
             return View(salons);
         }
@@ -24,6 +33,11 @@ namespace WebProgramlamaProje.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             return View();
         }
 
@@ -31,6 +45,11 @@ namespace WebProgramlamaProje.Controllers
         [HttpPost]
         public IActionResult Create(Salon salon)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             if (salon.Services != null)
             {
                 foreach (var service in salon.Services)
@@ -111,6 +130,11 @@ namespace WebProgramlamaProje.Controllers
         // Salon detayları
         public IActionResult Details(int id)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             var salon = _context.Salons
                 .Include(s => s.Services) // Hizmetleri dahil et
                 .Include(s => s.Employees) // Çalışanları dahil et
@@ -129,6 +153,12 @@ namespace WebProgramlamaProje.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
+
             // Salon ve ilişkili hizmetleri yükle
             var salon = _context.Salons
                                 .Include(s => s.Services)
@@ -154,6 +184,11 @@ namespace WebProgramlamaProje.Controllers
         [HttpPost]
         public IActionResult Edit(Salon salon)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             if (ModelState.IsValid)
             {
                 // Veritabanından mevcut salon ve ilişkili hizmetleri yükle
@@ -265,6 +300,11 @@ namespace WebProgramlamaProje.Controllers
         [HttpPost]
         public IActionResult DeleteService([FromBody] int serviceId)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             // Veritabanından hizmeti bul
             var service = _context.Services.FirstOrDefault(s => s.Id == serviceId);
 
@@ -286,6 +326,11 @@ namespace WebProgramlamaProje.Controllers
         [HttpPost]
         public IActionResult DeleteEmployee([FromBody] int employeeId)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             var employee = _context.Employees.FirstOrDefault(e => e.Id == employeeId);
 
             if (employee != null)
@@ -306,6 +351,11 @@ namespace WebProgramlamaProje.Controllers
         // Salon silme
         public IActionResult Delete(int id)
         {
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User"); // Giriş ekranına yönlendirme
+            }
             var salon = _context.Salons.FirstOrDefault(s => s.Id == id);
             if (salon != null)
             {

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<h2>Giriş Yap</h2>
+
+@if (TempData["Message"] != null)
+{
+    <p style="color: green;">@TempData["Message"]</p>
+}
+
+@if (TempData["Error"] != null)
+{
+    <p style="color: red;">@TempData["Error"]</p>
+}
+
+<!-- Admin Girişi -->
+<form method="get" action="/User/AdminLogin">
+    <button type="submit">Admin Girişi</button>
+</form>
+
+<!-- Üye Girişi -->
+<form method="get" action="/User/UserLogin">
+    <button type="submit">Üye Girişi</button>
+</form>
+
+<!-- Kayıt Ol -->
+<form method="get" action="/User/Register">
+    <button type="submit">Kayıt Ol</button>
+</form>
