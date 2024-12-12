@@ -10,6 +10,14 @@ builder.Services.AddHttpContextAccessor();
 // DbContext'i kaydedin
 builder.Services.AddDbContext<SalonDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Authentication ekleyin
+builder.Services.AddAuthentication("CookieAuth")
+    .AddCookie("CookieAuth", options =>
+    {
+        options.LoginPath = "/User/Login"; // Login sayfasý
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Oturum süresi
+        options.SlidingExpiration = true; // Oturum süresi yenilenebilir
+    });
 
 
 builder.Services.AddSession(
@@ -33,10 +41,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

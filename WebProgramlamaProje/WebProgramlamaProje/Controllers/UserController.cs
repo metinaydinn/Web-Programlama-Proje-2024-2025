@@ -76,6 +76,8 @@ namespace WebProgramlamaProje.Controllers
                 HttpContext.Session.SetString("UserRole", "Customer");
                 HttpContext.Session.SetString("UserEmail", user.Email);
                 HttpContext.Session.SetString("UserName", user.Name);
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
+
                 ViewData["Message"] = "Üye girişi başarılı!";
                 return RedirectToAction("UserDashboard", "User"); // Kullanıcıyı kendi paneline yönlendir
             }

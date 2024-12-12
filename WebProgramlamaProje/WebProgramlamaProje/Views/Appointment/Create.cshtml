@@ -1,0 +1,147 @@
+﻿@model WebProgramlamaProje.Models.Appointment
+
+@{
+    ViewData["Title"] = "Randevu Al";
+}
+
+<h2 class="text-center">Randevu Al</h2>
+
+<form asp-action="Create" method="post">
+    <!-- Salon Seçimi -->
+    <div class="form-group">
+        <label for="SalonId">Salon Seçin</label>
+        <select id="SalonId" name="SalonId" class="form-control" required>
+            <option value="">Salon Seçin</option>
+            @foreach (var salon in ViewBag.Salons)
+            {
+                <option value="@salon.Id">@salon.Name</option>
+            }
+        </select>
+    </div>
+
+    <!-- Çalışma Saatleri -->
+    <div id="WorkingHours" class="mt-3">
+        <h5>Çalışma Saatleri:</h5>
+        <p class="text-muted">Lütfen bir salon seçin.</p>
+    </div>
+
+    <!-- Çalışan Seçimi -->
+    <div class="form-group mt-3">
+        <label for="EmployeeId">Çalışan Seçin</label>
+        <select id="EmployeeId" name="EmployeeId" class="form-control" disabled required>
+            <option value="">Önce Salon Seçin</option>
+        </select>
+    </div>
+    <!-- Servis Seçimi -->
+    <div class="form-group mt-3">
+        <label for="ServiceId">Servis Seçin</label>
+        <select id="ServiceId" name="ServiceId" class="form-control" disabled required>
+            <option value="">Önce Salon Seçin</option>
+        </select>
+    </div>
+
+    <!-- Tarih ve Saat Seçimi -->
+    <div class="form-group mt-3">
+        <label for="Date">Randevu Tarihi ve Saati</label>
+        <input type="datetime-local" id="Date" name="Date" class="form-control" required />
+        <span asp-validation-for="Date" class="text-danger"></span> <!-- Date alanına özel hata mesajı -->
+    </div>
+
+    <!-- Submit Butonu -->
+    <button type="submit" class="btn btn-primary mt-3">Randevu Al</button>
+</form>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById("SalonId").addEventListener("change", function () {
+        const salonId = this.value; // Dropdown'dan alınan salon ID'si
+        console.log("Seçilen SalonId:", salonId); // Loglama
+
+        const employeeDropdown = document.getElementById("EmployeeId");
+        const workingHoursDiv = document.getElementById("WorkingHours");
+        const serviceDropdown = document.getElementById("ServiceId");
+        // Çalışanlar dropdown'ı sıfırla
+        employeeDropdown.innerHTML = '<option value="">Çalışan Seçin</option>';
+        employeeDropdown.disabled = true;
+        serviceDropdown.innerHTML = '<option value="">Hizmet Seçin</option>';
+        serviceDropdown.disabled = true;
+        // Çalışma saatleri sıfırla
+        workingHoursDiv.innerHTML = "<h5>Çalışma Saatleri:</h5><p class='text-muted'>Lütfen bir salon seçin.</p>";
+
+        if (salonId) {
+            fetch('/Appointment/GetSalonDetails', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ salonId: parseInt(salonId) }) // Salon ID'sini gönder
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP hatası! Durum: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Dönen JSON:", data); // Yanıtı konsola yazdır
+
+                    if (data.success) {
+                        // Çalışma saatlerini göster
+                        let workingHoursHtml = "<h5>Çalışma Saatleri:</h5><ul>";
+                        if (data.workingHours && data.workingHours.length > 0) {
+                                console.log("Çalışma saatleri:", data.workingHours);
+                            data.workingHours.forEach(hour => {
+                                workingHoursHtml += `<li>${hour.dayOfWeek}: ${hour.startTime} - ${hour.endTime}</li>`;
+                            });
+                        } else {
+                            workingHoursHtml += "<li>Bu salon için çalışma saatleri bulunamadı.</li>";
+                        }
+                        workingHoursHtml += "</ul>";
+                        workingHoursDiv.innerHTML = workingHoursHtml;
+
+                        // Çalışanları dropdown'a ekle
+                        const employeeDropdown = document.getElementById("EmployeeId");
+                        if (data.employees && data.employees.length > 0) {
+                            console.log("Çalışanlar:", data.employees);  // Çalışanlar verisini kontrol et
+                            data.employees.forEach(employee => {
+                                const option = document.createElement("option");
+                                option.value = employee.id;
+                                option.textContent = employee.name;
+                                employeeDropdown.appendChild(option);
+                            });
+                            employeeDropdown.disabled = false; // Çalışan seçimini etkinleştir
+                        } else {
+                            employeeDropdown.innerHTML = '<option value="">Çalışan bulunamadı</option>';
+                            employeeDropdown.disabled = true; // Çalışanları eklememe durumunda dropdown'ı devre dışı bırak
+                        }
+                            if (data.services && data.services.length > 0) {
+                                console.log("Hizmetler", data.services);
+
+                                // Dropdown'u doldur
+                                data.services.forEach(service => {
+                                    const option = document.createElement("option");
+                                    option.value = service.id;
+                                    option.textContent = `${service.name} - ${service.price} TL`;
+                                    serviceDropdown.appendChild(option);
+                                });
+
+                                serviceDropdown.disabled = false; // 'D' harfi küçük olmalı
+                            } else {
+                                // Eğer hizmet yoksa default mesaj
+                                serviceDropdown.innerHTML = '<option value="">Hizmet bulunamadı</option>';
+                                serviceDropdown.disabled = true; // 'D' harfi küçük olmalı
+                            }
+                        
+
+                    } else {
+                        alert(data.message); // Backend'den dönen hata mesajı
+                    }
+                })
+                .catch(err => {
+                    console.error("Fetch Hatası:", err);
+                    alert("Bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+                });
+        }
+    });
+    });
+</script>

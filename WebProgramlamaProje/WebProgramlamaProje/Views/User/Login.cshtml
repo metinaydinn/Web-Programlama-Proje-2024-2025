@@ -3,7 +3,48 @@
 }
 
 <h2>Giriş Yap</h2>
+<style>
 
+    h2 {
+        text-align: center; /* Ortala */
+        font-size: 28px; /* Daha büyük yazı boyutu */
+        font-weight: bold; /* Kalın yazı */
+        color: #007bff; /* Mavi renk */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        margin-bottom: 20px; /* Alt boşluk */
+    }
+    /* Buton Tasarımı */
+    button {
+        background-color: #007bff; /* Mavi arka plan */
+        color: white; /* Beyaz yazı */
+        border: none; /* Kenarlıkları kaldır */
+        border-radius: 8px; /* Yuvarlatılmış köşeler */
+        padding: 10px 20px; /* İç boşluk */
+        font-size: 16px; /* Yazı boyutu */
+        font-weight: bold; /* Kalın yazı */
+        cursor: pointer; /* İmleç değişimi */
+        margin: 10px 0; /* Dikey boşluk */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+        transition: background-color 0.3s, transform 0.2s; /* Geçiş efektleri */
+    }
+
+        button:hover {
+            background-color: #0056b3; /* Hover durumunda daha koyu mavi */
+            transform: scale(1.05); /* Hover'da hafif büyütme efekti */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge */
+        }
+
+        button:active {
+            background-color: #003d80; /* Tıklama durumunda daha koyu */
+            transform: scale(0.98); /* Tıklama sırasında küçülme efekti */
+        }
+
+    /* Formların Ortalanması */
+    form {
+        text-align: center;
+        margin: 10px 0;
+    }
+</style>
 @if (TempData["Message"] != null)
 {
     <p style="color: green;">@TempData["Message"]</p>

@@ -7,12 +7,12 @@
 
         // İlişkiler
         public int SalonId { get; set; }
-        public Salon Salon { get; set; }
+        public Salon? Salon { get; set; }
         public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
         public int ServiceId { get; set; }
-        public Service Service { get; set; }
+        public Service? Service { get; set; }
         public int CustomerId { get; set; } // Müşteri ilişkisi
-        public User Customer { get; set; } // Navigation property Entity Framework, navigation property'leri kullanarak veritabanında ilişkiler (foreign key bağlantıları) oluşturur.
+        public User? Customer { get; set; } // Navigation property Entity Framework, navigation property'leri kullanarak veritabanında ilişkiler (foreign key bağlantıları) oluşturur.
     }
 }
