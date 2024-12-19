@@ -139,18 +139,18 @@ namespace WebProgramlamaProje.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Date", "Çalışma saatleri geçersiz.");
+                    ModelState.AddModelError("Date", "Bu gün berber kapalı, lütfen başka bir gün seçin.");
                 }
             }
-            else
+
+
+
+
+            // Çakışma kontrolü
+            if (IsAppointmentTimeConflict(appointment))
             {
-                // Eğer çalışma saatleri bulunamadıysa (kapalı gün)
-                ModelState.AddModelError("Date", "Bu gün berber kapalı, lütfen başka bir gün seçin.");
+                ModelState.AddModelError("Date", "Bu saat aralığında randevu mevcut. Lütfen farklı bir saat seçin.");
             }
-
-
-
-
 
             //            Console.WriteLine($"SalonId: {appointment.SalonId}");
             //          Console.WriteLine($"ServiceId: {appointment.ServiceId}");
@@ -163,6 +163,19 @@ namespace WebProgramlamaProje.Controllers
                 // Tarih değerini UTC olarak ayarlayın
                 appointment.Date = DateTime.SpecifyKind(appointment.Date, DateTimeKind.Utc);
                 _context.Appointments.Add(appointment);
+                // Çalışanın randevularına ekleme
+                var employee = await _context.Employees
+                                              .Include(e => e.Appointments) // Randevuları dahil edin
+                                              .FirstOrDefaultAsync(e => e.Id == appointment.EmployeeId);
+                if (employee != null)
+                {
+                    employee.Appointments.Add(appointment); // Çalışanın randevularına ekle
+                    Console.WriteLine("Randevu çalışanın listesine eklendi.");
+                }
+                else
+                {
+                    Console.WriteLine("Çalışan bulunamadı.");
+                }
                 await _context.SaveChangesAsync();
                 Console.WriteLine("Randevu başarıyla eklendi.");
                 return RedirectToAction("UserDashboard", "User");
@@ -183,6 +196,61 @@ namespace WebProgramlamaProje.Controllers
 
         }
 
+
+
+        private bool IsAppointmentTimeConflict(Appointment appointment)
+        {
+            // İşlem süresini al
+            var serviceDuration = _context.Services
+                .Where(s => s.Id == appointment.ServiceId)
+                .Select(s => s.Duration)
+                .FirstOrDefault();
+
+            if (serviceDuration <= 0)
+            {
+                Console.WriteLine("Geçersiz işlem süresi.");
+                return false;
+            }
+
+            // Yeni randevunun başlangıç ve bitiş zamanlarını UTC olarak ayarla
+            var appointmentStartTime = appointment.Date; // Yerel zaman
+            var appointmentEndTime = appointmentStartTime.AddMinutes(serviceDuration + 10);
+            Console.WriteLine("appointmentStartTime: " + appointmentStartTime);
+            Console.WriteLine("appointmentEndTime: " + appointmentEndTime);
+            // Aynı berber (EmployeeId) için mevcut randevuları getir
+            var appointments = _context.Appointments
+                .Include(a => a.Service)
+                .Where(a => a.EmployeeId == appointment.EmployeeId) // Aynı berber
+                .ToList(); // Veriyi belleğe alıyoruz
+
+            // Mevcut randevularla çakışma kontrolü yap
+            foreach (var a in appointments)
+            {
+                // Mevcut randevunun başlangıç ve bitiş zamanlarını hesapla
+                var existingStartTime = a.Date.ToUniversalTime();
+                var existingEndTime = existingStartTime.AddMinutes(a.Service != null ? a.Service.Duration + 10 : 10);
+                Console.WriteLine("Başlangıç saati: " + existingStartTime);
+                Console.WriteLine("Bitiş saati: " + existingEndTime);
+                // Saat aralığı çakışma kontrolü
+                if (appointmentStartTime < existingEndTime && appointmentEndTime > existingStartTime)
+                {
+                    Console.WriteLine($"Çakışan randevu: Başlangıç = {existingStartTime}, Bitiş = {existingEndTime}");
+                    return true; // Çakışma tespit edildi
+                }
+            }
+
+            return false; // Çakışma yok
+        }
+
+
+
+
+
+
+
+
+
+
         // GET: Appointment/Index
         public async Task<IActionResult> Index()
         {
@@ -197,28 +265,26 @@ namespace WebProgramlamaProje.Controllers
             return View(appointments);
         }
 
-        // GET: Appointment/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Appointment/MyAppointments
+        public async Task<IActionResult> MyAppointments()
         {
-            if (id == null)
+            var userId = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userId))
             {
-                return NotFound();
+                return RedirectToAction("Login", "User");
             }
 
-            var appointment = await _context.Appointments
+            var appointments = await _context.Appointments
                 .Include(a => a.Salon)
                 .Include(a => a.Employee)
                 .Include(a => a.Service)
                 .Include(a => a.Customer)
-                .FirstOrDefaultAsync(a => a.Id == id);
+                .Where(a => a.CustomerId.ToString() == userId)
+                .ToListAsync();
 
-            if (appointment == null)
-            {
-                return NotFound();
-            }
-
-            return View(appointment);
+            return View(appointments);
         }
+
 
         // GET: Appointment/Delete/5
         public async Task<IActionResult> Delete(int? id)

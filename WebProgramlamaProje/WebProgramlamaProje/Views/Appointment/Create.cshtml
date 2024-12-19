@@ -90,12 +90,17 @@
                         let workingHoursHtml = "<h5>Çalışma Saatleri:</h5><ul>";
                         if (data.workingHours && data.workingHours.length > 0) {
                                 console.log("Çalışma saatleri:", data.workingHours);
-                            data.workingHours.forEach(hour => {
-                                workingHoursHtml += `<li>${hour.dayOfWeek}: ${hour.startTime} - ${hour.endTime}</li>`;
-                            });
-                        } else {
-                            workingHoursHtml += "<li>Bu salon için çalışma saatleri bulunamadı.</li>";
-                        }
+                                data.workingHours.forEach(hour => {
+                                    // Çalışma saatlerinin null olup olmadığını kontrol et
+                                    if (hour.startTime && hour.endTime) {
+                                        workingHoursHtml += `<li>${hour.dayOfWeek}: ${hour.startTime} - ${hour.endTime}</li>`;
+                                    } else {
+                                        workingHoursHtml += `<li>${hour.dayOfWeek}: Kapalı</li>`;
+                                    }
+                                });
+                            } else {
+                                workingHoursHtml += "<li>Bu salon için çalışma saatleri bulunamadı.</li>";
+                            }
                         workingHoursHtml += "</ul>";
                         workingHoursDiv.innerHTML = workingHoursHtml;
 

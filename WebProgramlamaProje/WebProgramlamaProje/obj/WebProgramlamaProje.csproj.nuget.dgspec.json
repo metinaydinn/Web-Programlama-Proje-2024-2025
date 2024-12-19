@@ -55,9 +55,17 @@
               "target": "Package",
               "version": "[6.0.16, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[6.0.8, )"
+            },
+            "System.Security.Permissions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             }
           },
           "imports": [

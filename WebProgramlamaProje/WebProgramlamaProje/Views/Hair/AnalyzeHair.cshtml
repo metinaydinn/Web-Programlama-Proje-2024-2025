@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Hair Analysis";
+}
+
+<h2>Hair Analysis</h2>
+
+<div>
+    <form id="analyzeHairForm" method="post" enctype="multipart/form-data">
+        <label for="photo">Yüklemek istediğiniz fotoğrafı seçin:</label>
+        <br />
+        <input type="file" id="photo" name="photo" />
+        <br /><br />
+        <button type="submit" id="analyzeButton">Analiz Et</button>
+    </form>
+</div>
+
+<hr />
+
+<div id="result">
+    <!-- Analiz sonuçları burada görünecek -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#analyzeHairForm").submit(function (e) {
+            e.preventDefault(); // Formun varsayılan gönderimini engelle
+
+            if (!$("#photo").val()) {
+                alert("Lütfen bir fotoğraf seçin!");
+                return;
+            }
+
+            var formData = new FormData(this); // Form verilerini al
+            $("#result").html("Lütfen bekleyin, analiz yapılıyor...");
+
+            $.ajax({
+                url: '/Hair/AnalyzeHair', // Controller'daki metot URL'i
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        // Başarılı yanıt alındığında sonucu göster
+                        var resultHtml = `<h3>Analiz Sonuçları</h3>`;
+                        resultHtml += `<p>Yüz Şekli: ${response.data.face_shape}</p>`;
+                        resultHtml += `<p>Önerilen Saç Modeli: ${response.data.hair_model}</p>`;
+                        
+                        resultHtml += `<img src="${response.data.output_image}" alt="Sonuç Görseli" />`;
+                        $("#result").html(resultHtml);
+                    } else {
+                        // Başarısız yanıt alındığında hata mesajı göster
+                        $("#result").html(`<p style="color: red;">Hata: ${response.message}</p>`);
+                    }
+                },
+                error: function () {
+                    // AJAX hatası durumunda mesaj göster
+                    $("#result").html(`<p style="color: red;">Bir hata oluştu. Lütfen tekrar deneyin.</p>`);
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    #analyzeButton {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+        #analyzeButton:hover {
+            background-color: #0056b3;
+        }
+
+    #result {
+        margin-top: 20px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+    }
+</style>

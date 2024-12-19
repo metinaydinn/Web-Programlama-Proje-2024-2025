@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebProgramlamaProje.Models.Appointment>
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Salon</th>
+            <th>Çalışan</th>
+            <th>Hizmet</th>
+            <th>Randevu Tarihi</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.Salon.Name</td>
+                <td>@appointment.Employee.Name</td>
+                <td>@appointment.Service.Name</td>
+                <td>@appointment.Date.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Appointment", new { id = appointment.Id })" class="btn btn-info">Detay</a>
+                    <a href="@Url.Action("Delete", "Appointment", new { id = appointment.Id })" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
