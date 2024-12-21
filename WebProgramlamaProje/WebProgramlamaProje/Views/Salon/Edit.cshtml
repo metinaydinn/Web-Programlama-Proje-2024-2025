@@ -107,12 +107,43 @@
         }
     </div>
 
-   
-
-
 
     <!-- Yeni Çalışan Ekle Butonu -->
     <button type="button" id="addEmployee" class="btn btn-success mb-3">+ Yeni Çalışan Ekle</button>
+   
+    
+    
+    <h4>Randevular</h4>
+    <div id="appointments">
+        @if (Model.Appointments != null && Model.Appointments.Any())
+        {
+            @for (var i = 0; i < Model.Appointments.Count; i++)
+            {
+                <div class="form-group appointment-item">
+                    <!-- Randevu ID -->
+                    <input type="hidden" name="Appointments[@i].Id" value="@Model.Appointments[i].Id" />
+
+                    <!-- Randevu Tarihi -->
+                    <label for="Appointments[@i].Date">Randevu Tarihi:</label>
+                    <input name="Appointments[@i].Date" class="form-control" value="@Model.Appointments[i].Date.ToString("yyyy-MM-dd HH:mm")" readonly />
+
+                    <!-- Hizmet Adı -->
+                    <label for="Appointments[@i].Service">Hizmet:</label>
+                    <input name="Appointments[@i].Service" class="form-control" value="@Model.Appointments[i].Service.Name" readonly />
+
+                    <!-- Çalışan Adı -->
+                    <label for="Appointments[@i].Employee">Çalışan:</label>
+                    <input name="Appointments[@i].Employee" class="form-control" value="@Model.Appointments[i].Employee.Name" readonly />
+
+                    <!-- Randevu Sil Butonu -->
+                    <button type="button" class="btn btn-danger mt-2 remove-appointment-btn" data-appointment-id="@Model.Appointments[i].Id">
+                        Randevuyu Sil
+                    </button>
+                </div>
+            }
+        }
+    </div>
+
 
 
     <!-- Kaydet ve İptal Butonları -->
@@ -131,18 +162,18 @@
 
             // Yeni hizmet için HTML
             const newService = `
-                                <div class="form-group">
-                                            <input type="hidden" name="Services[${serviceIndex}].Id" value="0" />
-                                    <label for="Services[${serviceIndex}].Name">Hizmet Adı:</label>
-                                    <input name="Services[${serviceIndex}].Name" class="form-control" placeholder="Hizmet Adı" />
+                                        <div class="form-group">
+                                                    <input type="hidden" name="Services[${serviceIndex}].Id" value="0" />
+                                            <label for="Services[${serviceIndex}].Name">Hizmet Adı:</label>
+                                            <input name="Services[${serviceIndex}].Name" class="form-control" placeholder="Hizmet Adı" />
 
-                                    <label for="Services[${serviceIndex}].Price">Fiyat:</label>
-                                    <input name="Services[${serviceIndex}].Price" class="form-control" type="number" step="0.01" placeholder="Fiyat" />
+                                            <label for="Services[${serviceIndex}].Price">Fiyat:</label>
+                                            <input name="Services[${serviceIndex}].Price" class="form-control" type="number" step="0.01" placeholder="Fiyat" />
 
-                                    <label for="Services[${serviceIndex}].Duration">Süre (dk):</label>
-                                    <input name="Services[${serviceIndex}].Duration" class="form-control" type="number" placeholder="Süre" />
-                                </div>
-                            `;
+                                            <label for="Services[${serviceIndex}].Duration">Süre (dk):</label>
+                                            <input name="Services[${serviceIndex}].Duration" class="form-control" type="number" placeholder="Süre" />
+                                        </div>
+                                    `;
 
             // Yeni hizmeti ekle
             servicesDiv.insertAdjacentHTML("beforeend", newService);
@@ -155,32 +186,32 @@
             const employeesDiv = document.getElementById("employees");
 
             const employeeField = `
-                        <div class="form-group employee-item">
-                            <!-- Çalışan ID -->
-                            <input type="hidden" name="Employees[${employeeIndex}].Id" value="0" />
+                                <div class="form-group employee-item">
+                                    <!-- Çalışan ID -->
+                                    <input type="hidden" name="Employees[${employeeIndex}].Id" value="0" />
 
-                            <!-- Çalışan Adı -->
-                            <label for="Employees[${employeeIndex}].Name">Çalışan Adı:</label>
-                            <input name="Employees[${employeeIndex}].Name" class="form-control" placeholder="Çalışan Adı" />
+                                    <!-- Çalışan Adı -->
+                                    <label for="Employees[${employeeIndex}].Name">Çalışan Adı:</label>
+                                    <input name="Employees[${employeeIndex}].Name" class="form-control" placeholder="Çalışan Adı" />
 
-                            <!-- Uzmanlık -->
-                            <label>Uzmanlık:</label>
-                            <div id="specialties-${employeeIndex}">
-                                <input name="Employees[${employeeIndex}].Specialty[]" class="form-control mb-2" placeholder="Uzmanlık Ekle" />
-                            </div>
-                            <button type="button" class="btn btn-secondary mt-2" onclick="addSpecialty(${employeeIndex})">Uzmanlık Ekle</button>
+                                    <!-- Uzmanlık -->
+                                    <label>Uzmanlık:</label>
+                                    <div id="specialties-${employeeIndex}">
+                                        <input name="Employees[${employeeIndex}].Specialty[]" class="form-control mb-2" placeholder="Uzmanlık Ekle" />
+                                    </div>
+                                    <button type="button" class="btn btn-secondary mt-2" onclick="addSpecialty(${employeeIndex})">Uzmanlık Ekle</button>
 
-                            <!-- Yapabildiği İşler -->
-                            <label>Yapabildiği İşler:</label>
-                            <div id="skills-${employeeIndex}">
-                                <input name="Employees[${employeeIndex}].Skills[]" class="form-control mb-2" placeholder="Yapabildiği İş Ekle" />
-                            </div>
-                            <button type="button" class="btn btn-secondary mt-2" onclick="addSkill(${employeeIndex})">Yapabildiği İş Ekle</button>
+                                    <!-- Yapabildiği İşler -->
+                                    <label>Yapabildiği İşler:</label>
+                                    <div id="skills-${employeeIndex}">
+                                        <input name="Employees[${employeeIndex}].Skills[]" class="form-control mb-2" placeholder="Yapabildiği İş Ekle" />
+                                    </div>
+                                    <button type="button" class="btn btn-secondary mt-2" onclick="addSkill(${employeeIndex})">Yapabildiği İş Ekle</button>
 
-                            <!-- Çalışan Sil Butonu -->
-                            <button type="button" class="btn btn-danger mt-2 remove-employee-btn">Çalışanı Sil</button>
-                        </div>
-                    `;
+                                    <!-- Çalışan Sil Butonu -->
+                                    <button type="button" class="btn btn-danger mt-2 remove-employee-btn">Çalışanı Sil</button>
+                                </div>
+                            `;
 
             employeesDiv.insertAdjacentHTML("beforeend", employeeField);
             employeeIndex++;
@@ -266,8 +297,42 @@
             }
         });
 
+        document.addEventListener("click", function (e) {
+            if (e.target && e.target.classList.contains("remove-appointment-btn")) {
+                const appointmentId = e.target.getAttribute("data-appointment-id");
 
-       
+                // Onay mesajı
+                if (confirm("Bu hizmeti silmek istediğinize emin misiniz?")) {
+                    // Backend'e silme isteği gönder
+                    fetch('/Salon/DeleteAppointment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(appointmentId)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // HTML'den hizmeti kaldır
+                                const appointmentDiv = e.target.closest(".appointment-item");
+                                if (appointmentId) {
+                                    appointmentDiv.remove();
+                                }
+                                alert(data.message);
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => console.error('Hata:', error));
+                }
+            }
+        });
+
+
+
+
+
 
     </script>
 }

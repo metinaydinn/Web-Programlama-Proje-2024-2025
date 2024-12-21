@@ -1,0 +1,40 @@
+﻿@model WebProgramlamaProje.Models.Appointment
+
+@{
+    ViewData["Title"] = "Randevu Sil";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Bu randevuyu silmek istediğinizden emin misiniz?</h3>
+
+<div>
+    <h4>Randevu Bilgileri</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Salon</dt>
+        <dd class="col-sm-10">@Model.Salon.Name</dd>
+
+        <dt class="col-sm-2">Çalışan</dt>
+        <dd class="col-sm-10">@Model.Employee.Name</dd>
+
+        <dt class="col-sm-2">Hizmet</dt>
+        <dd class="col-sm-10">@Model.Service.Name</dd>
+
+        <dt class="col-sm-2">Randevu Tarihi</dt>
+        <dd class="col-sm-10">@Model.Date.ToString("yyyy-MM-dd HH:mm")</dd>
+    </dl>
+
+    <form method="post" id="deleteForm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger" onclick="return confirmDelete();">Evet, Sil</button>
+        <a href="@Url.Action("MyAppointments", "Appointment")" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm('Bu randevuyu silmek istediğinizden emin misiniz?'); // Onay mesajını göster
+    }
+</script>

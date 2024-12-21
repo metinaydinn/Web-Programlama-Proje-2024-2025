@@ -25,7 +25,7 @@
                 <td>@appointment.Service.Name</td>
                 <td>@appointment.Date.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>
-                    <a href="@Url.Action("Details", "Appointment", new { id = appointment.Id })" class="btn btn-info">Detay</a>
+                    
                     <a href="@Url.Action("Delete", "Appointment", new { id = appointment.Id })" class="btn btn-danger">Sil</a>
                 </td>
             </tr>
@@ -33,3 +33,7 @@
     </tbody>
 </table>
 
+<!-- Geri dön butonu -->
+<div>
+    <a href="@Url.Action("UserDashboard", "User")" class="btn btn-primary">Geri Dön</a>
+</div>

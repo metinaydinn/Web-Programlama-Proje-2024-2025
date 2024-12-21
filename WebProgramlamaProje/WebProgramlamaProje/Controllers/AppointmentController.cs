@@ -287,6 +287,8 @@ namespace WebProgramlamaProje.Controllers
 
 
         // GET: Appointment/Delete/5
+        // Randevu Silme
+        // GET: Appointment/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -320,7 +322,8 @@ namespace WebProgramlamaProje.Controllers
                 _context.Appointments.Remove(appointment);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("MyAppointments");
         }
     }
+ 
 }

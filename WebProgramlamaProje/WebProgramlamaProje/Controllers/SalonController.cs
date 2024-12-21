@@ -138,7 +138,8 @@ namespace WebProgramlamaProje.Controllers
             var salon = _context.Salons
                 .Include(s => s.Services) // Hizmetleri dahil et
                 .Include(s => s.Employees) // Çalışanları dahil et
-                .Include(s => s.WorkingHours) // Çalışanları dahil et
+                .Include(s => s.WorkingHours)
+                .Include(s => s.Appointments)
                 .FirstOrDefault(s => s.Id == id);
 
             if (salon == null)
@@ -162,7 +163,8 @@ namespace WebProgramlamaProje.Controllers
             // Salon ve ilişkili hizmetleri yükle
             var salon = _context.Salons
                                 .Include(s => s.Services)
-                                .Include(s => s.Employees) // Çalışanları yükle
+                                .Include(s => s.Employees)// Çalışanları yükle
+                                .Include(s => s.Appointments)
                                 .FirstOrDefault(s => s.Id == id);
 
             if (salon == null)
@@ -345,6 +347,33 @@ namespace WebProgramlamaProje.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult DeleteAppointment([FromBody] int appointmentId)
+        {
+            // Admin kontrolü
+            if (!IsAdmin())
+            {
+                TempData["Error"] = "Bu sayfaya erişim yetkiniz yok!";
+                return RedirectToAction("Login", "User");
+            }
+
+            // appointmentId'yi kontrol et
+            Console.WriteLine("AppointmentId from frontend: " + appointmentId);  // Logla
+
+            // Veritabanından randevuyu bul
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == appointmentId);
+
+            if (appointment != null)
+            {
+                _context.Appointments.Remove(appointment);
+                _context.SaveChanges();
+                return Json(new { success = true, message = "Randevu başarıyla silindi." });
+            }
+
+            // Eğer randevu bulunamadıysa
+            Console.WriteLine("Appointment not found with ID: " + appointmentId);  // Logla
+            return Json(new { success = false, message = "Randevu bulunamadı." });
+        }
 
 
 
@@ -364,5 +393,7 @@ namespace WebProgramlamaProje.Controllers
             }
             return RedirectToAction("Index");
         }
+        
+
     }
 }
