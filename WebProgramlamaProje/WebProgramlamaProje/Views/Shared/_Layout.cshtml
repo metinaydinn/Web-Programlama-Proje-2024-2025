@@ -8,98 +8,21 @@
     <title>@ViewData["Title"] - WebProgramlamaProje</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        /* Genel Sayfa Arka Planı */
-        body {
-            background-color: #f9f9f9; /* Hafif gri bir arka plan */
-            font-family: Arial, sans-serif;
-        }
+    
 
-        /* Navbar Tasarımı */
-        .navbar {
-            background-color: #007bff !important; /* Mavi bir arka plan */
-            color: white !important;
-        }
-
-            .navbar .navbar-brand {
-                font-weight: bold;
-                color: white !important;
-            }
-
-            .navbar .nav-link {
-                color: white !important;
-                transition: color 0.3s;
-            }
-
-                .navbar .nav-link:hover {
-                    color: #ffd700 !important; /* Altın sarısı renk */
-                }
-
-        /* Footer Tasarımı */
-        footer {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 0;
-            margin-top: 20px;
-        }
-
-            footer a {
-                color: #ffd700;
-                text-decoration: none;
-            }
-
-                footer a:hover {
-                    text-decoration: underline;
-                }
-
-        /* Container Stili */
-        .container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
-            border-radius: 8px; /* Yuvarlatılmış köşeler */
-        }
-        /* Buton Tasarımı */
-        .btn-custom {
-            background-color: #007bff; /* Bootstrap mavi */
-            color: white;
-            border: none;
-            border-radius: 8px; /* Köşeleri yuvarla */
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
-            margin: 10px;
-        }
-
-            .btn-custom:hover {
-                background-color: #0056b3; /* Daha koyu mavi */
-                transform: scale(1.05); /* Hover'da hafif büyüt */
-                box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge */
-            }
-
-            .btn-custom:active {
-                background-color: #003d80; /* Basıldığında daha koyu */
-                transform: scale(0.98); /* Basıldığında küçülme efekti */
-            }
-    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebProgramlamaProje</a>
+                <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Login">BERBER</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        
 
                         @if (HttpContextAccessor.HttpContext?.Session.GetString("UserRole") == "Admin")
                         {

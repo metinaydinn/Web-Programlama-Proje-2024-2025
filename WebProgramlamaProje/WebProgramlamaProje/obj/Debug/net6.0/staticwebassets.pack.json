@@ -13,6 +13,18 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\HP\\source\\repos\\WebProgramlamaProje\\WebProgramlamaProje\\wwwroot\\images\\860.jpeg",
+      "PackagePath": "staticwebassets\\images\\860.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\HP\\source\\repos\\WebProgramlamaProje\\WebProgramlamaProje\\wwwroot\\images\\861.jpeg",
+      "PackagePath": "staticwebassets\\images\\861.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\HP\\source\\repos\\WebProgramlamaProje\\WebProgramlamaProje\\wwwroot\\images\\862.jpeg",
+      "PackagePath": "staticwebassets\\images\\862.jpeg"
+    },
+    {
       "Id": "C:\\Users\\HP\\source\\repos\\WebProgramlamaProje\\WebProgramlamaProje\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

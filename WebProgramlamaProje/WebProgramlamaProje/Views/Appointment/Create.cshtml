@@ -3,7 +3,125 @@
 @{
     ViewData["Title"] = "Randevu Al";
 }
+<style>
+    /* Genel Sayfa Stili */
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı Tipi */
+        background-color: #1e1e1e; /* Koyu Gri Arka Plan */
+        color: #ffffff; /* Beyaz Yazı Rengi */
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+    /* Başlık Stili */
+    h2.text-center {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif Gölge */
+        margin-bottom: 30px;
+    }
+
+    /* Form Stili */
+    form {
+        background-color: #2c2c2c; /* Daha Koyu Arka Plan */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Hafif Gölge */
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #FFD700; /* Altın Sarısı */
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #FFD700; /* Altın Sarısı Kenarlık */
+        border-radius: 5px;
+        background-color: #3b3b3b; /* Koyu Gri İç Arka Plan */
+        color: #ffffff; /* Beyaz Yazı Rengi */
+        font-size: 14px;
+    }
+
+        input::placeholder {
+            color: #b3b3b3; /* Placeholder için Gri Renk */
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #e6b800; /* Daha Koyu Altın Sarısı */
+        }
+
+    /* Çalışma Saatleri Alanı */
+    #WorkingHours {
+        background-color: #3b3b3b; /* Koyu Gri İç Arka Plan */
+        padding: 10px;
+        border-radius: 5px;
+        color: #ffffff; /* Beyaz Yazı */
+        border: 1px solid #FFD700; /* Altın Sarısı Kenarlık */
+    }
+
+        #WorkingHours h5 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #WorkingHours ul {
+            padding-left: 20px;
+            list-style-type: disc; /* Madde İmleri */
+        }
+
+    /* Submit Butonu */
+    button[type="submit"] {
+        background-color: #FFD700; /* Altın Sarısı */
+        color: #1e1e1e; /* Koyu Yazı Rengi */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #e6b800; /* Daha Koyu Altın Sarısı */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        button[type="submit"]:active {
+            background-color: #cc9900; /* Daha Koyu Altın Sarısı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    /* Hata Mesajları */
+    .text-danger {
+        color: #ff6b6b; /* Kırmızı */
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
 <h2 class="text-center">Randevu Al</h2>
 
 <form asp-action="Create" method="post">

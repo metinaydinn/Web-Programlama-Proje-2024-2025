@@ -2,7 +2,7 @@
     ViewBag.Title = "Hair Analysis";
 }
 
-<h2>Hair Analysis</h2>
+<h2>Saç Analizi</h2>
 
 <div>
     <form id="analyzeHairForm" method="post" enctype="multipart/form-data">
@@ -67,25 +67,154 @@
 </script>
 
 <style>
+    /* Genel Stil */
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı Tipi */
+        background-color: #1e1e1e; /* Koyu Gri Arka Plan */
+        color: #ffffff; /* Beyaz Yazı Rengi */
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+    /* Başlık Stili */
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif Gölge */
+        margin-bottom: 20px;
+    }
+
+    /* Form Stili */
+    #analyzeHairForm {
+        background-color: #2c2c2c; /* Daha Koyu Gri Arka Plan */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif Gölge */
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    input[type="file"] {
+        margin-top: 10px;
+        padding: 5px;
+        background-color: #1e1e1e;
+        color: #fff;
+        border: 1px solid #FFD700; /* Altın Sarısı Kenarlık */
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+        input[type="file"]::file-selector-button {
+            background-color: #FFD700; /* Altın Sarısı */
+            color: #1e1e1e; /* Koyu Yazı */
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+            input[type="file"]::file-selector-button:hover {
+                background-color: #e6b800; /* Daha Koyu Altın Sarısı */
+            }
+
+    /* Buton Stili */
     #analyzeButton {
-        background-color: #007bff;
-        color: white;
+        background-color: #FFD700; /* Altın Sarısı */
+        color: #1e1e1e; /* Koyu Yazı Rengi */
         padding: 10px 20px;
         border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
         cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.3s ease;
     }
 
         #analyzeButton:hover {
-            background-color: #0056b3;
+            background-color: #e6b800; /* Daha Koyu Altın Sarısı */
+            transform: scale(1.05); /* Hafif Büyüme */
         }
 
+        #analyzeButton:active {
+            background-color: #cc9900; /* Daha Da Koyu Altın Sarısı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    /* Sonuç Bölümü */
     #result {
-        margin-top: 20px;
+        margin-top: 30px;
+        background-color: #2c2c2c; /* Daha Koyu Gri Arka Plan */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif Gölge */
+        max-width: 600px;
+        margin: 20px auto;
+        text-align: center;
+        color: #fff;
     }
 
-    img {
-        max-width: 100%;
-        height: auto;
-        margin-top: 10px;
+        #result h3 {
+            font-size: 20px;
+            color: #FFD700; /* Altın Sarısı */
+            margin-bottom: 10px;
+        }
+
+        #result p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #result img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+    /* Geri Dön Butonu */
+    .btn-primary {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #007bff; /* Mavi Arka Plan */
+        color: #fff; /* Beyaz Yazı */
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
     }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Daha Koyu Mavi */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        .btn-primary:active {
+            background-color: #004085; /* Daha Da Koyu Mavi */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
 </style>

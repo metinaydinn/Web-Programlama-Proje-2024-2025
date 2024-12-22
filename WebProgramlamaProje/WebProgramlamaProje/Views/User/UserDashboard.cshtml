@@ -1,13 +1,81 @@
 ﻿@{
     ViewData["Title"] = "Kullanıcı Paneli";
 }
+<style>
+    /* Kullanıcı Paneli için özel bir kapsayıcı */
+    .user-dashboard-container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
 
-<h2>Kullanıcı Paneli</h2>
-<p>Merhaba,!</p>
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-image: url('/images/862.jpeg'), url('/images/862.jpeg');
+        background-color: black;
+        background-size: auto; /* Resmi tam olarak kapsa */
+        background-position: left, right; /* Ortala */
+        background-repeat: no-repeat; /* Tekrar etmesin */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+        .user-dashboard-container h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff; /* Altın sarısı */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            margin-bottom: 20px;
+        }
 
-<ul>
-    <li><a href="/Appointment/Create">Randevu Al</a></li> <!-- Randevu Al bağlantısı eklendi -->
-    <li><a href="/Appointment/MyAppointments">Randevularımı Görüntüle</a></li>
-    <li><a href="/Hair/AnalyzeHair">Saç Önerisi al</a></li>
-    <li><a href="/User/Logout">Çıkış Yap</a></li>
-</ul>
+        .user-dashboard-container ul {
+            list-style-type: none; /* Liste işaretlerini kaldır */
+            padding: 0;
+            margin: 0 auto;
+            max-width: 300px;
+        }
+
+        .user-dashboard-container li {
+            margin-bottom: 15px;
+        }
+
+        .user-dashboard-container a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background-color: #FFD700; /* Altın sarısı arka plan */
+            color: #1e1e1e; /* Koyu yazı rengi */
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+            .user-dashboard-container a:hover {
+                background-color: #e6b800; /* Daha koyu altın sarısı */
+                transform: scale(1.05); /* Hafif büyüme efekti */
+            }
+
+            .user-dashboard-container a:active {
+                background-color: #cc9900; /* Daha koyu altın sarısı */
+                transform: scale(0.95); /* Hafif küçülme efekti */
+            }
+</style>
+
+<div class="user-dashboard-container">
+    <h2>Kullanıcı Paneli</h2>
+    <ul>
+        <li><a href="/Appointment/Create">Randevu Al</a></li>
+        <li><a href="/Appointment/MyAppointments">Randevularımı Görüntüle</a></li>
+        <li><a href="/Hair/AnalyzeHair">Saç Önerisi al</a></li>
+        <li><a href="/User/Logout">Çıkış Yap</a></li>
+    </ul>
+</div>

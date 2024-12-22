@@ -5,7 +5,119 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+<style>
+    /* Genel Sayfa Stili */
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı Tipi */
+        background-color: #1e1e1e; /* Koyu Gri Arka Plan */
+        color: #ffffff; /* Beyaz Yazı Rengi */
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+    /* Başlık Stili */
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif Gölge */
+        margin-bottom: 30px;
+    }
+
+    /* Tablo Stili */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #2c2c2c; /* Koyu Gri Arka Plan */
+        color: #ffffff;
+        border-radius: 10px; /* Yuvarlatılmış Köşeler */
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #444; /* Alt Çizgi */
+        }
+
+        .table th {
+            background-color: #343a40; /* Daha Koyu Gri */
+            color: #FFD700; /* Altın Sarısı */
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #3b3b3b; /* Çift Satır Arka Planı */
+        }
+
+        .table tr:hover {
+            background-color: #444; /* Üzerine Gelindiğinde Arka Plan */
+        }
+
+    /* Sil Butonu */
+    .btn-danger {
+        background-color: #ff6b6b; /* Kırmızı Arka Plan */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #e63946; /* Daha Koyu Kırmızı */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        .btn-danger:active {
+            background-color: #d62828; /* Daha Da Koyu Kırmızı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    /* Geri Dön Butonu */
+    .btn-primary {
+        background-color: #FFD700; /* Altın Sarısı */
+        color: #1e1e1e; /* Koyu Yazı Rengi */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+        .btn-primary:hover {
+            background-color: #e6b800; /* Daha Koyu Altın Sarısı */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        .btn-primary:active {
+            background-color: #cc9900; /* Daha Da Koyu Altın Sarısı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    /* Geri Dön Butonu Konumlandırma */
+    div {
+        text-align: center;
+    }
+</style>
 <table class="table">
     <thead>
         <tr>

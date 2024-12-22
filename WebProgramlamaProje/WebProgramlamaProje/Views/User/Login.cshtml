@@ -4,46 +4,96 @@
 
 <h2>Giriş Yap</h2>
 <style>
-
+    /* Başlık Tasarımı */
     h2 {
+
         text-align: center; /* Ortala */
-        font-size: 28px; /* Daha büyük yazı boyutu */
+        font-size: 32px; /* Daha büyük yazı boyutu */
         font-weight: bold; /* Kalın yazı */
-        color: #007bff; /* Mavi renk */
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Hafif gölge */
-        margin-bottom: 20px; /* Alt boşluk */
+        color: #FFD700; /* Daha koyu bir renk */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Daha belirgin gölge */
+        margin-bottom: 30px; /* Alt boşluk */
+        margin-top: 20px; /* Üst boşluk */
+        letter-spacing: 1px; /* Harfler arası boşluk */
     }
+
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-image: url('/images/862.jpeg'), url('/images/862.jpeg');
+        background-color:black;
+        background-size: auto; /* Resmi tam olarak kapsa */
+        background-position: left, right; /* Ortala */
+        background-repeat: no-repeat; /* Tekrar etmesin */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+
     /* Buton Tasarımı */
     button {
-        background-color: #007bff; /* Mavi arka plan */
-        color: white; /* Beyaz yazı */
-        border: none; /* Kenarlıkları kaldır */
-        border-radius: 8px; /* Yuvarlatılmış köşeler */
-        padding: 10px 20px; /* İç boşluk */
-        font-size: 16px; /* Yazı boyutu */
+        background-color: black; /* Koyu gri arka plan */
+        color: #343a40; /* Altın sarısı yazı */
+        border: 2px solid #FFD700; /* Altın sarısı kenarlık */
+        border-radius: 10px; /* Yuvarlatılmış köşeler */
+        padding: 12px 20px; /* İç boşluk */
+        font-size: 18px; /* Yazı boyutu */
         font-weight: bold; /* Kalın yazı */
         cursor: pointer; /* İmleç değişimi */
-        margin: 10px 0; /* Dikey boşluk */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
-        transition: background-color 0.3s, transform 0.2s; /* Geçiş efektleri */
+        text-align: center;
+        width: 200px; /* Buton genişliği */
+        margin: 15px auto; /* Ortalamak için */
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Geçiş efektleri */
     }
 
         button:hover {
-            background-color: #0056b3; /* Hover durumunda daha koyu mavi */
-            transform: scale(1.05); /* Hover'da hafif büyütme efekti */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Daha belirgin gölge */
+            background-color: #FFD700; /* Hover'da altın sarısı */
+            color: #343a40; /* Yazı rengi koyu gri */
+            transform: scale(1.05); /* Hover'da hafif büyütme */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Daha belirgin gölge */
         }
 
         button:active {
-            background-color: #003d80; /* Tıklama durumunda daha koyu */
-            transform: scale(0.98); /* Tıklama sırasında küçülme efekti */
+            background-color: #d4af37; /* Tıklamada koyu altın */
+            transform: scale(0.95); /* Tıklamada küçülme efekti */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Daha hafif gölge */
         }
 
     /* Formların Ortalanması */
     form {
-        text-align: center;
-        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Form elemanlarını ortalar */
+        margin: 20px 0;
     }
+
+    /* Mesaj Kutusu */
+    p[style*="color: green;"] {
+        background-color: #d4edda; /* Yeşil arka plan */
+        color: #155724; /* Yeşil yazı rengi */
+        border: 1px solid #c3e6cb; /* Kenarlık */
+        padding: 10px; /* İç boşluk */
+        border-radius: 5px; /* Köşe yuvarlatma */
+        text-align: center; /* Ortala */
+        font-weight: bold; /* Kalın yazı */
+        width: 50%; /* Genişlik */
+        margin: 10px auto; /* Ortalamak için */
+    }
+
+    p[style*="color: red;"] {
+        background-color: #f8d7da; /* Kırmızı arka plan */
+        color: #721c24; /* Kırmızı yazı rengi */
+        border: 1px solid #f5c6cb; /* Kenarlık */
+        padding: 10px; /* İç boşluk */
+        border-radius: 5px; /* Köşe yuvarlatma */
+        text-align: center; /* Ortala */
+        font-weight: bold; /* Kalın yazı */
+        width: 50%; /* Genişlik */
+        margin: 10px auto; /* Ortalamak için */
+    }
+
 </style>
 @if (TempData["Message"] != null)
 {

@@ -1,7 +1,175 @@
 ﻿@model WebProgramlamaProje.Models.Salon
 
 <h2>Salon Düzenle</h2>
+<style>
+    /* Genel Gövde */
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Modern yazı tipi */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: #ffffff; /* Beyaz yazı */
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+
+    /* Başlıklar */
+    h2, h4 {
+        color: #FFD700; /* Altın sarısı */
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+    }
+
+    /* Formlar */
+    form {
+        background-color: #2c2c2c; /* Daha koyu arka plan */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        margin-bottom: 30px;
+    }
+
+    /* Form Grupları */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        color: #FFD700; /* Altın sarısı */
+        margin-bottom: 5px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #FFD700; /* Altın sarısı kenarlık */
+        border-radius: 5px;
+        background-color: #333333; /* Koyu arka plan */
+        color: #ffffff; /* Beyaz yazı */
+        font-size: 14px;
+    }
+
+        input::placeholder {
+            color: #b3b3b3; /* Placeholder için açık gri */
+        }
+
+    /* Butonlar */
+    button, .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        border: none;
+    }
+
+    /* Farklı Buton Stilleri */
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #bd2130;
+        }
+
+    /* Modal */
+    .modal-content {
+        background-color: #333333; /* Koyu arka plan */
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #FFD700; /* Altın sarısı */
+    }
+
+    .modal-title {
+        color: #FFD700; /* Altın sarısı */
+    }
+
+    .modal-footer .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .modal-footer .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Tablo */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #2c2c2c; /* Tablo arka plan */
+    }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #444; /* Koyu gri kenarlık */
+        }
+
+        table th {
+            background-color: #343a40; /* Koyu gri */
+            color: #FFD700; /* Altın sarısı yazı */
+            font-weight: bold;
+        }
+
+        table td {
+            color: #ffffff; /* Beyaz yazı */
+        }
+
+        /* Hover Efekti */
+        table tr:hover {
+            background-color: #444444; /* Hafif koyu gri */
+        }
+
+</style>
 <!-- Validation summary: Tüm hata mesajlarını burada göster -->
 <div asp-validation-summary="All" class="text-danger"></div>
 

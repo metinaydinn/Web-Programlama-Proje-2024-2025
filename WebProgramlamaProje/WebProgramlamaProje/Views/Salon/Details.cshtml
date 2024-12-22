@@ -1,4 +1,99 @@
 ﻿@model WebProgramlamaProje.Models.Salon
+<style>
+    body.salon-details-page {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı tipi */
+        background-color: #121212; /* Koyu arka plan */
+        color: #ffffff; /* Beyaz yazı rengi */
+        padding: 20px;
+    }
+
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+
+    h2, h3, h4 {
+        color: #FFD700; /* Altın sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    h4 {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+
+    p {
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    ul {
+        list-style: none; /* Liste işaretlerini kaldır */
+        padding: 0;
+    }
+
+        ul li {
+            background-color: #1e1e1e; /* Koyu gri arka plan */
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px; /* Yuvarlatılmış köşeler */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+            font-size: 16px;
+        }
+
+            ul li strong {
+                color: #FFD700; /* Altın sarısı */
+            }
+
+    .list-group {
+        padding: 0;
+    }
+
+    .list-group-item {
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: #ffffff; /* Beyaz yazı */
+        margin-bottom: 10px;
+        padding: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif kenarlık */
+        border-radius: 8px;
+    }
+
+    a.btn-primary {
+        background-color: #FFD700; /* Altın sarısı */
+        color: #121212; /* Koyu yazı rengi */
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        a.btn-primary:hover {
+            background-color: #e6b800; /* Daha koyu altın */
+            color: #000000;
+            transform: scale(1.05); /* Hafif büyüme */
+        }
+
+        a.btn-primary:active {
+            background-color: #cc9900; /* Daha koyu altın */
+            transform: scale(0.98); /* Hafif küçülme */
+        }
+</style>
 
 <h2>Salon Detayları</h2>
 

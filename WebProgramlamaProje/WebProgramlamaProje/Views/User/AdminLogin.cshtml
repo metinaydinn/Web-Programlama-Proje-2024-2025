@@ -1,8 +1,119 @@
 ﻿@{
     ViewData["Title"] = "Admin Girişi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Admin Girişi</h2>
+<style>
+    body.admin-login {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı tipi */
+        background-color: #121212; /* Koyu arka plan */
+        color: #ffffff; /* Beyaz yazı rengi */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ekranı kapla */
+        margin: 0;
+    }
+
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-image: url('/images/862.jpeg'), url('/images/862.jpeg');
+        background-color: black;
+        background-size: auto; /* Resmi tam olarak kapsa */
+        background-position: left, right; /* Ortala */
+        background-repeat: no-repeat; /* Tekrar etmesin */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+
+    .navbar {
+        padding-top:10px;
+        height: 60px;
+        line-height: 60px;
+    }
+
+    footer {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        margin-bottom: 20px;
+    }
+
+    p {
+        text-align: center;
+        color: #FF6B6B; /* Hata mesajları için kırmızımsı renk */
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    form {
+        background-color: #1e1e1e; /* Form arka planı */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        max-width: 400px;
+        width: 100%;
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #FFD700; /* Altın sarısı kenarlık */
+        border-radius: 5px;
+        background-color: #2c2c2c; /* Gri arka plan */
+        color: #ffffff; /* Beyaz yazı */
+        font-size: 14px;
+    }
+
+        input::placeholder {
+            color: #b3b3b3; /* Placeholder için gri renk */
+        }
+
+    button {
+        width: 100%;
+        background-color: #FFD700; /* Altın sarısı arka plan */
+        color: #121212; /* Koyu yazı rengi */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        button:hover {
+            background-color: #e6b800; /* Daha koyu altın */
+            transform: scale(1.02); /* Hafif büyüme */
+        }
+
+        button:active {
+            background-color: #cc9900; /* Daha da koyu altın */
+            transform: scale(0.98); /* Hafif küçülme */
+        }
+
+    div {
+        margin-bottom: 15px;
+    }
+</style>
 
 @if (TempData["Error"] != null)
 {

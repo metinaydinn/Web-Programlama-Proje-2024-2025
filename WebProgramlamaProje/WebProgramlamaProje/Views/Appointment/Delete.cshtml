@@ -3,7 +3,116 @@
 @{
     ViewData["Title"] = "Randevu Sil";
 }
+<style>
+    /* Genel Sayfa Stili */
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı Tipi */
+        background-color: #1e1e1e; /* Koyu Gri Arka Plan */
+        color: #ffffff; /* Beyaz Yazı Rengi */
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+    /* Başlık Stili */
+    h1 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif Gölge */
+        margin-bottom: 30px;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 20px;
+        color: #ff6b6b; /* Kırmızı Renk */
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Bilgi Listesi */
+    dl {
+        background-color: #2c2c2c; /* Daha Koyu Gri Arka Plan */
+        border-radius: 10px; /* Yuvarlatılmış Köşeler */
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif Gölge */
+    }
+
+    dt {
+        font-weight: bold;
+        color: #FFD700; /* Altın Sarısı */
+        margin-bottom: 10px;
+    }
+
+    dd {
+        margin-bottom: 15px;
+        color: #ffffff; /* Beyaz Yazı */
+    }
+
+    /* Buton Stili */
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger {
+        background-color: #ff6b6b; /* Kırmızı Arka Plan */
+        color: #ffffff; /* Beyaz Yazı */
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #e63946; /* Daha Koyu Kırmızı */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        .btn-danger:active {
+            background-color: #d62828; /* Daha Da Koyu Kırmızı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    .btn-secondary {
+        background-color: #FFD700; /* Altın Sarısı */
+        color: #1e1e1e; /* Koyu Yazı Rengi */
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #e6b800; /* Daha Koyu Altın Sarısı */
+            transform: scale(1.05); /* Hafif Büyüme */
+        }
+
+        .btn-secondary:active {
+            background-color: #cc9900; /* Daha Da Koyu Altın Sarısı */
+            transform: scale(0.95); /* Hafif Küçülme */
+        }
+
+    /* Form Konumlandırma */
+    form {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Geri Dön Butonu Konumlandırma */
+    a {
+        margin-left: 10px;
+    }
+</style>
 <h1>@ViewData["Title"]</h1>
 
 <h3>Bu randevuyu silmek istediğinizden emin misiniz?</h3>

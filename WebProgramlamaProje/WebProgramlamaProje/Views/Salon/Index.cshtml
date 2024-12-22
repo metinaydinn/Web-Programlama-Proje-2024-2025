@@ -1,7 +1,135 @@
 ﻿@model IEnumerable<WebProgramlamaProje.Models.Salon>
 
 <h2>Salon Listesi</h2>
+<style>
+    body {
+        font-family: 'Roboto', Arial, sans-serif; /* Yazı tipi */
+        background-color: #121212; /* Koyu arka plan */
+        color: #fff; /* Beyaz yazı */
+        margin: 0;
+        padding: 20px;
+    }
 
+    .container {
+        margin-top: 40px;
+        padding: 30px;
+        border-radius: 10px; /* Köşeleri yuvarlatma */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        background-color: #1e1e1e; /* Koyu gri arka plan */
+        color: white; /* Yazı rengini açık yap */
+        border: 1px solid rgba(255, 255, 255, 0.2); /* Hafif beyaz kenarlık */
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        color: #FFD700; /* Altın sarısı */
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Hafif gölge */
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        border-radius: 8px; /* Yuvarlatılmış köşeler */
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: #fff;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #121212;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .table {
+        width: 100%;
+        margin-top: 20px;
+        background-color: #fff; /* Koyu gri arka plan */
+        color: #fff;
+        border: 1px solid #333; /* Kenarlık */
+        border-radius: 8px; /* Yuvarlatılmış köşeler */
+        overflow: hidden;
+    }
+
+        .table thead th {
+            background-color: #343a40; /* Daha koyu başlık */
+            color: #ffd700; /* Altın sarısı yazı */
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid #333;
+        }
+
+            .table tbody tr:hover {
+                background-color: #fff; /* Hover durumunda daha açık gri */
+            }
+
+    .modal-content {
+        background-color: #1e1e1e; /* Koyu modal arka planı */
+        color: #fff;
+        border-radius: 10px;
+    }
+
+    .modal-header, .modal-footer {
+        border: none;
+    }
+
+    .modal-title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #FFD700;
+    }
+
+    .modal-body p {
+        font-size: 16px;
+    }
+
+    .btn-close {
+        background-color: transparent;
+        border: none;
+        color: #fff;
+    }
+
+        .btn-close:hover {
+            color: #FFD700;
+        }
+</style>
 <a href="/Salon/Create" class="btn btn-primary mb-3">Yeni Salon Ekle</a>
 
 <table class="table table-striped">
