@@ -26,6 +26,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Form gönderildiğinde çalışacak olan olay
         $("#analyzeHairForm").submit(function (e) {
             e.preventDefault(); // Formun varsayılan gönderimini engelle
 
@@ -36,9 +37,9 @@
 
             var formData = new FormData(this); // Form verilerini al
             $("#result").html("Lütfen bekleyin, analiz yapılıyor...");
-
+            //AJAX, web sayfalarının sunucu ile arka planda veri alışverişi yaparak sayfanın tamamını yeniden yüklemeden güncellenmesini sağlayan bir tekniktir.
             $.ajax({
-                url: '/Hair/AnalyzeHair', // Controller'daki metot URL'i
+                url: '/Hair/AnalyzeHair', // Analiz işlemini gerçekleştirecek sunucu metodu
                 type: 'POST',
                 data: formData,
                 processData: false,

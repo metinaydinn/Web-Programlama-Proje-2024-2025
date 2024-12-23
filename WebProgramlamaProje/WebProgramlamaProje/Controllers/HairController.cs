@@ -25,13 +25,13 @@ public class HairController : Controller
     {
         try
         {
-            // Fotoğrafın yüklü olup olmadığını kontrol edin
+            // Fotoğrafın yüklü olup olmadığını kontrol ediyoruz
             if (photo == null || photo.Length == 0)
             {
                 return Json(new { success = false, message = "Dosya yüklenmedi." });
             }
 
-            // Fotoğrafı geçici olarak kaydetmek için bir yol belirleyin
+            // Fotoğrafı geçici olarak kaydetmek için bir yol belirliyoruz
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
             Directory.CreateDirectory(uploadsFolder); // Klasör yoksa oluştur
             var filePath = Path.Combine(uploadsFolder, photo.FileName);

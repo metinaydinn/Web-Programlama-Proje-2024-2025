@@ -69,7 +69,10 @@
                 transform: scale(0.95); /* Hafif küçülme efekti */
             }
 </style>
-
+@if (TempData["Message"] != null)
+{
+    <p style="color: green;">@TempData["Message"]</p>
+}
 <div class="user-dashboard-container">
     <h2>Kullanıcı Paneli</h2>
     <ul>

@@ -105,11 +105,7 @@ namespace WebProgramlamaProje.Controllers
                 return View(salon); // Hata varsa tekrar formu göster
             }
 
-            // Koleksiyonların null olmaması için boş liste olarak başlatma
-            /*salon.Services ??= new List<Service>();
-            salon.Employees ??= new List<Employee>();
-            salon.WorkingHours ??= new List<WorkingHour>();
-            salon.Appointments ??= new List<Appointment>();*/
+           
             // Her bir çalışan için WorkingHours boş liste olarak başlatılır
             foreach (var employee in salon.Employees)
             {
@@ -324,7 +320,7 @@ namespace WebProgramlamaProje.Controllers
             return Json(new { success = false, message = "Hizmet bulunamadı." });
         }
 
-
+        //Neden FromBody Kullanılıyoruz Bu metot, bir HttpPost isteği olarak tanımlandığı için, genellikle istemci tarafında (örneğin bir AJAX çağrısı) gönderilen JSON verilerini alır.
         [HttpPost]
         public IActionResult DeleteEmployee([FromBody] int employeeId)
         {

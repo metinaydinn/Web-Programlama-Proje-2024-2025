@@ -152,11 +152,7 @@ namespace WebProgramlamaProje.Controllers
                 ModelState.AddModelError("Date", "Bu saat aralığında randevu mevcut. Lütfen farklı bir saat seçin.");
             }
 
-            //            Console.WriteLine($"SalonId: {appointment.SalonId}");
-            //          Console.WriteLine($"ServiceId: {appointment.ServiceId}");
-            //      Console.WriteLine($"EmployeeId: {appointment.EmployeeId}");
-            //    Console.WriteLine($"CustomerId: {appointment.CustomerId}");
-            //  Console.WriteLine($"Date: {appointment.Date}");
+            
             if (ModelState.IsValid)
             {
                 Console.WriteLine("Randevu ekleniyor...");
@@ -178,6 +174,7 @@ namespace WebProgramlamaProje.Controllers
                 }
                 await _context.SaveChangesAsync();
                 Console.WriteLine("Randevu başarıyla eklendi.");
+                TempData["Message"] = "Randevu Başarıyla alındı";
                 return RedirectToAction("UserDashboard", "User");
             }
             else
@@ -286,9 +283,8 @@ namespace WebProgramlamaProje.Controllers
         }
 
 
-        // GET: Appointment/Delete/5
         // Randevu Silme
-        // GET: Appointment/Delete/5
+        
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
